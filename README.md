@@ -1,5 +1,9 @@
 # AI Agent Assistant
 
+[![CI](https://github.com/Tony-QianxiLU/ai-agent-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Tony-QianxiLU/ai-agent-assistant/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/Tony-QianxiLU/ai-agent-assistant)](https://github.com/Tony-QianxiLU/ai-agent-assistant/releases)
+[![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/)
+
 An AI assistant that can plan a task, call tools, and return a structured result.
 
 This repository is part of my AI engineering portfolio. It demonstrates practical agent engineering concepts: task planning, tool calling, graph-based execution, testing, documentation, and optional LLM integration.
