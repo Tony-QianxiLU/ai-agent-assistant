@@ -8,6 +8,10 @@ An AI assistant that can plan a task, call tools, and return a structured result
 
 This repository is part of my AI engineering portfolio. It demonstrates practical agent engineering concepts: task planning, tool calling, graph-based execution, testing, documentation, and optional LLM integration.
 
+## Live Demo
+
+[Open the deployed Streamlit app](https://tony-qianxilu-ai-agent-assistant.streamlit.app/)
+
 ## Current Status
 
 Phase 1: portfolio-ready local agent prototype.
@@ -122,7 +126,7 @@ Never commit real API keys.
 - [x] Add optional OpenAI planner
 - [ ] Add persistent memory
 - [ ] Add browser/search tool
-- [ ] Deploy public demo
+- [x] Deploy public demo
 
 ## Interview Talking Points
 
