@@ -249,6 +249,10 @@ PYTHONPATH=src uv run agent-evaluate
 
 See [docs/evaluation.md](docs/evaluation.md) and [reports/evaluation-report.md](reports/evaluation-report.md).
 
+## Interview Preparation
+
+See [docs/interview-prep.md](docs/interview-prep.md) for recruiter explanations, technical questions, architecture questions, system design prompts, STAR stories, and follow-up questions.
+
 ## Technical Highlights
 
 - LangGraph makes `plan -> act -> remember -> respond` execution explicit.

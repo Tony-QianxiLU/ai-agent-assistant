@@ -7,7 +7,7 @@
     "answer_terms_rate": 1.0,
     "error_recovery_rate": 1.0,
     "overall_pass_rate": 1.0,
-    "average_latency_ms": 0.857016583904624
+    "average_latency_ms": 1.3976083602756262
   },
   "results": [
     {
@@ -25,7 +25,7 @@
         "tool:calculator"
       ],
       "answer": "Plan: The task contains an arithmetic expression, so I will use the calculator.\n\nTool results:\ncalculator (ok): 181",
-      "latency_ms": 1.9200420938432217,
+      "latency_ms": 3.538707969710231,
       "tool_selection_passed": true,
       "trajectory_passed": true,
       "answer_terms_passed": true,
@@ -74,7 +74,7 @@
         "tool:summarizer"
       ],
       "answer": "Plan: The task asks for a summary, so I will use the summarizer.\n\nTool results:\nsummarizer (ok): Agents can plan tasks.",
-      "latency_ms": 0.7080419454723597,
+      "latency_ms": 1.0410419199615717,
       "tool_selection_passed": true,
       "trajectory_passed": true,
       "answer_terms_passed": true,
@@ -123,7 +123,7 @@
         "tool:todo_extractor"
       ],
       "answer": "Plan: The task asks for structured todos, so I will use the todo extractor.\n\nTool results:\ntodo_extractor (ok): - [ ] read the README\n- [ ] run the tests\n- [ ] deploy the app",
-      "latency_ms": 0.6067079957574606,
+      "latency_ms": 0.97287492826581,
       "tool_selection_passed": true,
       "trajectory_passed": true,
       "answer_terms_passed": true,
@@ -167,7 +167,7 @@
         "plan"
       ],
       "answer": "I did not need to call a tool. Try a calculation, summarization, or todo extraction task.",
-      "latency_ms": 0.5119999404996634,
+      "latency_ms": 0.7529999129474163,
       "tool_selection_passed": true,
       "trajectory_passed": true,
       "answer_terms_passed": true,
@@ -205,7 +205,7 @@
         "tool:calculator"
       ],
       "answer": "Plan: The task contains an arithmetic expression, so I will use the calculator.\n\nTool results:\ncalculator (error): Tool error: float division by zero",
-      "latency_ms": 0.5382909439504147,
+      "latency_ms": 0.6824170704931021,
       "tool_selection_passed": true,
       "trajectory_passed": true,
       "answer_terms_passed": true,
