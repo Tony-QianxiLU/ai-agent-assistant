@@ -23,6 +23,7 @@ This project is part of my AI engineering portfolio. It demonstrates practical a
 - Isolate tool failures so one bad tool call does not crash the agent graph.
 - Record lightweight execution memory for task, plan, and tool results.
 - Show plan, tool calls, tool results, memory, and final answer in Streamlit.
+- Evaluate tool selection, graph trajectory, answer terms, error recovery, latency, and execution logs.
 - Test agent behavior without relying on paid API calls.
 - Deploy publicly on Streamlit Community Cloud.
 
@@ -82,13 +83,18 @@ ai-agent-assistant/
 |-- docs/
 |   |-- demo/
 |   |-- images/
+|   |-- video/
 |   |-- architecture.md
 |   |-- deployment.md
+|   |-- evaluation.md
 |   `-- walkthrough.md
 |-- src/
 |   `-- ai_agent_assistant/
 |       |-- app.py
 |       |-- config.py
+|       |-- evaluate.py
+|       |-- evaluation.py
+|       |-- execution_log.py
 |       |-- graph.py
 |       |-- memory.py
 |       |-- planner.py
@@ -146,6 +152,17 @@ uv run ruff check .
 uv run pytest
 ```
 
+Run the agent evaluation suite:
+
+```bash
+PYTHONPATH=src uv run agent-evaluate
+```
+
+This writes:
+
+- `reports/evaluation-report.md`
+- `reports/evaluation-report.json`
+
 ## Screenshots
 
 ![AI Agent Assistant screenshot](docs/images/agent-assistant.png)
@@ -157,6 +174,10 @@ Fallback screenshot:
 ## Demo GIF
 
 ![AI Agent Assistant demo](docs/demo/agent-assistant-demo.gif)
+
+## Walkthrough Video
+
+[Watch the 63-second project walkthrough](docs/video/agent-assistant-walkthrough.mp4)
 
 ## Usage
 
@@ -206,6 +227,28 @@ Tool error isolation:
 calculator (error): Tool error: float division by zero
 ```
 
+## Evaluation
+
+This project includes an offline agent benchmark that can run without an OpenAI API key. It evaluates whether the agent selects the expected tools, records the expected graph trajectory, returns expected output terms, isolates tool errors, and writes structured execution logs.
+
+Current benchmark report:
+
+| Metric | Result |
+| --- | ---: |
+| Tool selection accuracy | 100% |
+| Trajectory accuracy | 100% |
+| Answer terms rate | 100% |
+| Error recovery rate | 100% |
+| Overall pass rate | 100% |
+
+Run it locally:
+
+```bash
+PYTHONPATH=src uv run agent-evaluate
+```
+
+See [docs/evaluation.md](docs/evaluation.md) and [reports/evaluation-report.md](reports/evaluation-report.md).
+
 ## Technical Highlights
 
 - LangGraph makes `plan -> act -> remember -> respond` execution explicit.
@@ -214,6 +257,7 @@ calculator (error): Tool error: float division by zero
 - Local deterministic planning makes CI and demos reliable.
 - Optional OpenAI planning is controlled only through environment variables.
 - Execution memory records what happened during each run.
+- Evaluation reports include tool selection, trajectory, answer terms, error recovery, latency, and execution logs.
 - Tests cover planner selection, graph behavior, tool execution, and tool failure paths.
 
 ## Deployment
@@ -238,9 +282,9 @@ OPENAI_MODEL = "gpt-4.1-mini"
 
 - Add persistent memory across sessions.
 - Add browser/search tools with human approval gates.
-- Add richer planner evaluation datasets.
+- Add richer planner evaluation datasets with task difficulty tiers.
 - Add structured JSON output mode.
-- Add audit logging for tool calls.
+- Store evaluation reports as CI artifacts.
 - Add FastAPI endpoints for backend integration.
 
 ## License

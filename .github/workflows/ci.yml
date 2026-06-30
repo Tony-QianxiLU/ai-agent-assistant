@@ -31,3 +31,5 @@ jobs:
       - name: Test
         run: uv run pytest
 
+      - name: Evaluate
+        run: PYTHONPATH=src uv run agent-evaluate

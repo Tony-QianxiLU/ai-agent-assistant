@@ -1,0 +1,5 @@
+{"id":"calculator-tool-selection","task":"Calculate 24 * 7 + 13","expected_tools":["calculator"],"expected_answer_terms":["181"],"expected_memory_steps":["task","plan","tool:calculator"]}
+{"id":"summarizer-tool-selection","task":"Summarize: Agents can plan tasks. They can call tools and return structured results.","expected_tools":["summarizer"],"expected_answer_terms":["Agents can plan tasks"],"expected_memory_steps":["task","plan","tool:summarizer"]}
+{"id":"todo-tool-selection","task":"Create todos from: read the README, run the tests, deploy the app","expected_tools":["todo_extractor"],"expected_answer_terms":["read the README","run the tests","deploy the app"],"expected_memory_steps":["task","plan","tool:todo_extractor"]}
+{"id":"direct-response-trajectory","task":"Hello agent","expected_tools":[],"expected_answer_terms":["did not need to call a tool"],"expected_memory_steps":["task","plan"]}
+{"id":"tool-error-recovery","task":"Calculate 10 / 0","expected_tools":["calculator"],"expected_answer_terms":["error","Tool error"],"expected_memory_steps":["task","plan","tool:calculator"],"expected_error":true}
