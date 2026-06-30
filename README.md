@@ -77,6 +77,10 @@ uv run ruff check .
 uv run pytest
 ```
 
+## Demo Walkthrough
+
+See [docs/walkthrough.md](docs/walkthrough.md) for a suggested interview demo script.
+
 ## Example Tasks
 
 ```text
@@ -125,4 +129,3 @@ This project is designed to demonstrate:
 - Why deterministic local fallbacks are useful
 - How LangGraph structures multi-step workflows
 - How to test agent behavior without relying on external API calls
-
