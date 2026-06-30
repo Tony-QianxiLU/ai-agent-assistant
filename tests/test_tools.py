@@ -33,3 +33,11 @@ def test_default_registry_runs_registered_tool() -> None:
 
     assert result.output == "4"
 
+
+def test_default_registry_isolates_tool_errors() -> None:
+    result = default_registry().run(
+        ToolCall(name="calculator", arguments={"expression": "10 / 0"})
+    )
+
+    assert result.success is False
+    assert "Tool error" in result.output

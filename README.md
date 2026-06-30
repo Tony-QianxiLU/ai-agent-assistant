@@ -3,55 +3,61 @@
 [![CI](https://github.com/Tony-QianxiLU/ai-agent-assistant/actions/workflows/ci.yml/badge.svg)](https://github.com/Tony-QianxiLU/ai-agent-assistant/actions/workflows/ci.yml)
 [![Release](https://img.shields.io/github/v/release/Tony-QianxiLU/ai-agent-assistant)](https://github.com/Tony-QianxiLU/ai-agent-assistant/releases)
 [![Python](https://img.shields.io/badge/python-3.12-blue)](https://www.python.org/)
+[![Live Demo](https://img.shields.io/badge/live%20demo-Streamlit-ff4b4b)](https://tony-qianxilu-ai-agent-assistant.streamlit.app/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
-An AI assistant that can plan a task, call tools, and return a structured result.
+A LangGraph-based AI agent assistant that plans a task, calls tools, records execution memory, and returns a structured response through a Streamlit interface.
 
-This repository is part of my AI engineering portfolio. It demonstrates practical agent engineering concepts: task planning, tool calling, graph-based execution, testing, documentation, and optional LLM integration.
+This project is part of my AI engineering portfolio. It demonstrates practical agent engineering concepts: deterministic planning, optional LLM planning, graph-based orchestration, tool calling, tool error isolation, lightweight memory, testing, CI, deployment, and recruiter-friendly documentation.
 
 ## Live Demo
 
 [Open the deployed Streamlit app](https://tony-qianxilu-ai-agent-assistant.streamlit.app/)
 
-## Current Status
+## Features
 
-Phase 1: portfolio-ready local agent prototype.
-
-The current version includes:
-
-- LangGraph workflow
-- Local deterministic planner
-- Optional OpenAI planner
-- Tool registry
-- Calculator tool
-- Text summarizer tool
-- Todo extraction tool
-- Streamlit UI
-- Tests and CI
-- Deployment notes
-
-## Screenshot
-
-![AI Agent Assistant Streamlit UI](docs/assets/streamlit-home.png)
+- Plan tasks with a deterministic local planner.
+- Optionally use OpenAI for planning when `OPENAI_API_KEY` is configured.
+- Execute tool calls through a typed registry.
+- Run calculator, summarizer, and todo extraction tools.
+- Isolate tool failures so one bad tool call does not crash the agent graph.
+- Record lightweight execution memory for task, plan, and tool results.
+- Show plan, tool calls, tool results, memory, and final answer in Streamlit.
+- Test agent behavior without relying on paid API calls.
+- Deploy publicly on Streamlit Community Cloud.
 
 ## Architecture
 
+```mermaid
+flowchart TD
+    user["User"] --> ui["Streamlit UI"]
+    ui --> planner["Planner"]
+    planner --> graph["LangGraph Workflow"]
+    graph --> tools["Tool Calling"]
+    tools --> memory["Execution Memory"]
+    memory --> responder["Response Builder"]
+    responder --> output["Structured Response"]
+```
+
+## Agent Workflow
+
 ```text
-User task
-   |
-   v
+User
+  |
+  v
 Planner
-   |
-   v
-Tool calls
-   |
-   v
-Tool registry
-   |
-   v
-Tool results
-   |
-   v
-Final response
+  |
+  v
+Tool Calling
+  |
+  v
+Memory
+  |
+  v
+LLM / Response Builder
+  |
+  v
+Response
 ```
 
 ## Tech Stack
@@ -60,11 +66,47 @@ Final response
 - LangGraph
 - LangChain OpenAI
 - Streamlit
+- pydantic-settings
 - pytest
-- ruff
+- Ruff
 - uv
+- GitHub Actions
 
-## Getting Started
+## Folder Structure
+
+```text
+ai-agent-assistant/
+|-- .github/
+|   |-- ISSUE_TEMPLATE/
+|   `-- workflows/
+|-- docs/
+|   |-- demo/
+|   |-- images/
+|   |-- architecture.md
+|   |-- deployment.md
+|   `-- walkthrough.md
+|-- src/
+|   `-- ai_agent_assistant/
+|       |-- app.py
+|       |-- config.py
+|       |-- graph.py
+|       |-- memory.py
+|       |-- planner.py
+|       `-- tools.py
+|-- tests/
+|-- .env.example
+|-- pyproject.toml
+|-- uv.lock
+`-- README.md
+```
+
+## Installation
+
+Install `uv` if needed:
+
+```bash
+brew install uv
+```
 
 Install dependencies:
 
@@ -72,68 +114,141 @@ Install dependencies:
 uv sync
 ```
 
-Run the app:
+## Environment Variables
+
+Create a local `.env` file from `.env.example`:
 
 ```bash
-uv run streamlit run src/ai_agent_assistant/app.py
+cp .env.example .env
 ```
 
-Run tests:
+Supported variables:
+
+| Variable | Required | Purpose |
+| --- | --- | --- |
+| `OPENAI_API_KEY` | No | Enables optional OpenAI planning. |
+| `OPENAI_MODEL` | No | Chat model used by the OpenAI planner. |
+
+Never commit real API keys.
+
+## Quick Start
+
+Run the Streamlit app:
+
+```bash
+PYTHONPATH=src uv run streamlit run src/ai_agent_assistant/app.py
+```
+
+Run quality checks:
 
 ```bash
 uv run ruff check .
 uv run pytest
 ```
 
-## Demo Walkthrough
+## Screenshots
 
-See [docs/walkthrough.md](docs/walkthrough.md) for a suggested interview demo script.
+![AI Agent Assistant screenshot](docs/images/agent-assistant.png)
 
-## Example Tasks
+Fallback screenshot:
+
+![AI Agent Assistant Streamlit UI](docs/assets/streamlit-home.png)
+
+## Demo GIF
+
+![AI Agent Assistant demo](docs/demo/agent-assistant-demo.gif)
+
+## Usage
+
+1. Open the app.
+2. Keep `Local deterministic` planner selected for a reproducible demo.
+3. Enter a task such as a calculation, summarization, or todo extraction request.
+4. Run the agent.
+5. Inspect the plan, tool calls, tool results, execution memory, and final answer.
+
+## Example Prompts
 
 ```text
 Calculate 24 * 7 + 13
 ```
 
 ```text
-Summarize: Retrieval augmented generation combines search with generation.
+Summarize: Agents can plan tasks, call tools, and return structured results.
 ```
 
 ```text
 Create todos from: read the README, run the tests, deploy the app
 ```
 
-## Environment Variables
+## Example Outputs
 
-Copy `.env.example` to `.env` if you want to use OpenAI planning:
+Calculation:
 
-```bash
-cp .env.example .env
+```text
+Plan: The task contains an arithmetic expression, so I will use the calculator.
+
+Tool results:
+calculator (ok): 181
 ```
 
-Never commit real API keys.
+Todo extraction:
 
-## Roadmap
+```text
+todo_extractor (ok):
+- [ ] read the README
+- [ ] run the tests
+- [ ] deploy the app
+```
 
-- [x] Create professional project skeleton
-- [x] Add LangGraph workflow
-- [x] Add local planner
-- [x] Add tool registry
-- [x] Add calculator, summarizer, and todo tools
-- [x] Add Streamlit UI
-- [x] Add tests
-- [x] Add CI
-- [x] Add optional OpenAI planner
-- [ ] Add persistent memory
-- [ ] Add browser/search tool
-- [x] Deploy public demo
+Tool error isolation:
 
-## Interview Talking Points
+```text
+calculator (error): Tool error: float division by zero
+```
 
-This project is designed to demonstrate:
+## Technical Highlights
 
-- How agents differ from simple chatbots
-- How tool calling works
-- Why deterministic local fallbacks are useful
-- How LangGraph structures multi-step workflows
-- How to test agent behavior without relying on external API calls
+- LangGraph makes `plan -> act -> remember -> respond` execution explicit.
+- Tool registry keeps tool implementations independent and testable.
+- Tool errors are isolated and returned as structured results.
+- Local deterministic planning makes CI and demos reliable.
+- Optional OpenAI planning is controlled only through environment variables.
+- Execution memory records what happened during each run.
+- Tests cover planner selection, graph behavior, tool execution, and tool failure paths.
+
+## Deployment
+
+The public demo is deployed on Streamlit Community Cloud.
+
+Suggested Streamlit settings:
+
+- Repository: `Tony-QianxiLU/ai-agent-assistant`
+- Branch: `main`
+- Main file path: `src/ai_agent_assistant/app.py`
+- Python version: `3.12`
+
+Optional secrets:
+
+```toml
+OPENAI_API_KEY = "..."
+OPENAI_MODEL = "gpt-4.1-mini"
+```
+
+## Future Improvements
+
+- Add persistent memory across sessions.
+- Add browser/search tools with human approval gates.
+- Add richer planner evaluation datasets.
+- Add structured JSON output mode.
+- Add audit logging for tool calls.
+- Add FastAPI endpoints for backend integration.
+
+## License
+
+This project is released under the MIT License. See [LICENSE](LICENSE).
+
+## Acknowledgements
+
+- LangGraph for graph-based agent orchestration.
+- Streamlit for fast AI app deployment.
+- OpenAI for optional LLM planning.

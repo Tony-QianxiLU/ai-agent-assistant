@@ -2,6 +2,7 @@ import streamlit as st
 
 from ai_agent_assistant.config import settings
 from ai_agent_assistant.graph import AgentGraph
+from ai_agent_assistant.memory import render_memory
 from ai_agent_assistant.planner import LocalPlanner, OpenAIPlanner
 
 
@@ -12,7 +13,7 @@ st.caption("A portfolio project for LangGraph-based tool-using agents.")
 
 with st.sidebar:
     st.header("Project Status")
-    st.write("Phase 1: portfolio-ready local agent prototype.")
+    st.write("Portfolio-ready LangGraph agent with tool calling.")
     planner_mode = st.radio("Planner", options=["Local deterministic", "OpenAI"])
 
 default_task = "Calculate 24 * 7 + 13"
@@ -41,6 +42,16 @@ if st.button("Run agent", type="primary"):
     else:
         st.write("No tool calls.")
 
+    st.subheader("Tool Results")
+    if result["tool_results"]:
+        for tool_result in result["tool_results"]:
+            status = "success" if tool_result.success else "error"
+            st.write(f"{tool_result.name} ({status}): {tool_result.output}")
+    else:
+        st.write("No tool results.")
+
+    st.subheader("Execution Memory")
+    st.code(render_memory(result.get("memory", [])))
+
     st.subheader("Answer")
     st.write(result["answer"])
-

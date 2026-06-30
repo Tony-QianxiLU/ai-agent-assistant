@@ -12,5 +12,13 @@ def test_agent_graph_handles_no_tool_task() -> None:
     result = AgentGraph().invoke("Hello")
 
     assert result["tool_results"] == []
+    assert result["memory"][0].step == "task"
     assert "did not need to call a tool" in result["answer"]
 
+
+def test_agent_graph_records_tool_errors() -> None:
+    result = AgentGraph().invoke("Calculate 10 / 0")
+
+    assert result["tool_results"][0].success is False
+    assert "Tool error" in result["tool_results"][0].output
+    assert "error" in result["answer"]

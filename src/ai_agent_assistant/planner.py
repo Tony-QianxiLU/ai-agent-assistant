@@ -1,6 +1,7 @@
 import json
 import re
 from dataclasses import dataclass
+from typing import Protocol
 
 from langchain_openai import ChatOpenAI
 
@@ -11,6 +12,11 @@ from ai_agent_assistant.tools import ToolCall
 class Plan:
     reasoning: str
     tool_calls: list[ToolCall]
+
+
+class Planner(Protocol):
+    def plan(self, task: str) -> Plan:
+        ...
 
 
 class LocalPlanner:
@@ -87,4 +93,3 @@ def _extract_after_marker(task: str, marker: str) -> str:
     if len(parts) == 2 and parts[1].strip():
         return parts[1].strip()
     return task
-

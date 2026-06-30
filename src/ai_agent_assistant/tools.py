@@ -15,6 +15,7 @@ class ToolCall:
 class ToolResult:
     name: str
     output: str
+    success: bool = True
 
 
 ToolFunction = Callable[[dict[str, str]], str]
@@ -29,9 +30,21 @@ class ToolRegistry:
 
     def run(self, call: ToolCall) -> ToolResult:
         if call.name not in self._tools:
-            return ToolResult(name=call.name, output=f"Unknown tool: {call.name}")
+            return ToolResult(
+                name=call.name,
+                output=f"Unknown tool: {call.name}",
+                success=False,
+            )
 
-        output = self._tools[call.name](call.arguments)
+        try:
+            output = self._tools[call.name](call.arguments)
+        except Exception as error:
+            return ToolResult(
+                name=call.name,
+                output=f"Tool error: {error}",
+                success=False,
+            )
+
         return ToolResult(name=call.name, output=output)
 
     @property
@@ -104,4 +117,3 @@ def default_registry() -> ToolRegistry:
     registry.register("summarizer", summarize)
     registry.register("todo_extractor", extract_todos)
     return registry
-
