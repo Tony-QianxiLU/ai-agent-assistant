@@ -9,17 +9,17 @@
 - Answer terms rate: 100%
 - Error recovery rate: 100%
 - Overall pass rate: 100%
-- Average latency: 0.9 ms
+- Average latency: 1.4 ms
 
 ## Case Results
 
 | Case | Tool selection | Trajectory | Answer terms | Error recovery | Latency | Expected tools | Selected tools |
 | --- | --- | --- | --- | --- | ---: | --- | --- |
-| calculator-tool-selection | PASS | PASS | PASS | PASS | 1.9 ms | calculator | calculator |
-| summarizer-tool-selection | PASS | PASS | PASS | PASS | 0.7 ms | summarizer | summarizer |
-| todo-tool-selection | PASS | PASS | PASS | PASS | 0.6 ms | todo_extractor | todo_extractor |
-| direct-response-trajectory | PASS | PASS | PASS | PASS | 0.5 ms | None | None |
-| tool-error-recovery | PASS | PASS | PASS | PASS | 0.5 ms | calculator | calculator |
+| calculator-tool-selection | PASS | PASS | PASS | PASS | 3.5 ms | calculator | calculator |
+| summarizer-tool-selection | PASS | PASS | PASS | PASS | 1.0 ms | summarizer | summarizer |
+| todo-tool-selection | PASS | PASS | PASS | PASS | 1.0 ms | todo_extractor | todo_extractor |
+| direct-response-trajectory | PASS | PASS | PASS | PASS | 0.8 ms | None | None |
+| tool-error-recovery | PASS | PASS | PASS | PASS | 0.7 ms | calculator | calculator |
 
 ## Execution Logs
 
